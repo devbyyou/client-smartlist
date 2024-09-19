@@ -6,7 +6,7 @@ import {
   LoginResponse,
   //  User,
 } from '../../@types/user';
-import { getUserDataFromLocalStorage } from '../../utils/user';
+// import { getUserDataFromLocalStorage } from '../../utils/user';
 
 interface UserState {
   logged: boolean;
@@ -24,7 +24,7 @@ interface UserState {
   isLoading: boolean;
   // filteredEquipes: Equipe[];
 }
-const userData = getUserDataFromLocalStorage();
+// const userData = getUserDataFromLocalStorage();
 
 export const initialState: UserState = {
   logged: false,
@@ -121,7 +121,7 @@ export const initialState: UserState = {
     email: 'jeandupont@exemple.com',
     password: 'motdepasse1',
   },
-  ...userData,
+  // ...userData,
 };
 
 export const login = createAppAsyncThunk(
@@ -138,7 +138,7 @@ export const login = createAppAsyncThunk(
 
     // Pour sauvegarde mes informations, je transforme mon objet en chaine de caractère
     // Je stocke cette chaine de caractère dans le localStorage
-    localStorage.setItem('user', JSON.stringify(data));
+    // localStorage.setItem('user', JSON.stringify(data));
 
     // Je type les données que je renvoie pour que le type soit transmis
     // dans la fonction de reducer

@@ -1,6 +1,6 @@
 'use client';
 
-import styles from './page.module.css'
+// import styles from './page.module.css'
 
 // import type { RootState } from './GlobalRedux/store';
 // import { useSelector, useDispatch } from 'react-redux';
@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <main className="test">
-    
+
     </main>
   )
 }
