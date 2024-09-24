@@ -1,0 +1,159 @@
+.homePage {
+  /* background-color: #000; */
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.homePage {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    position: relative;
+  }
+
+.header {
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.title {
+  color: #78c258;
+  font-size: 24px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.shoppingList {
+  padding: 0 20px;
+}
+
+.itemCard {
+  background-color: #222;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.itemDetails {
+  display: flex;
+  align-items: center;
+}
+
+.itemImage {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.addButton {
+  background-color: #78c258;
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.searchSection {
+  padding: 20px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #222;
+  border: none;
+  color: #fff;
+}
+
+.recentSection, .suggestionsSection, .categoriesSection {
+  padding: 0 20px;
+}
+
+.recentSection h2, .suggestionsSection h2, .categoriesSection h2 {
+  display: flex;
+  justify-content: space-between;
+  color: #78c258;
+}
+
+.recentItems img, .categories img {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.suggestions button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #333; /* Couleur de fond de la navbar */
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    border-radius: 30px 30px 0 0;
+  }
+  
+  .navItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #888; /* Couleur par défaut */
+    cursor: pointer;
+  }
+  
+  .navItem img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .navItem span {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .active {
+    color: #78c258; /* Couleur active pour Home */
+  }
+  
+  .notificationDot {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background-color: red;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }

@@ -2,7 +2,8 @@
 import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../utils/axios';
 
-export const fetchApi = createAsyncThunk('api/fetchApi', async () => {
+export const fetchApi = createAsyncThunk('api/fetchApi', 
+  async () => {
   try {
     const response = await axiosInstance.get('/');
     return response.data;

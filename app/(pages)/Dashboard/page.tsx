@@ -10,10 +10,9 @@ export default function DashboardPage() {
   return (
     <div>
       DashboardPage
-      {/* <Image src={myImage} alt="my image" /> */}
-      {/* <Image src={link} width={200} height={200} alt="hello" /> */}
+      
       <div className="relative h-60 w-60 mt-10 mb-10">
-        {/* <Image src={link} fill alt="hello" /> */}
+       
       </div>
     </div>
   );
