@@ -4,24 +4,33 @@ import styles from './styles/Home.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faA, faHome, faPersonFalling, faQrcode, faShop } from '@fortawesome/free-solid-svg-icons';
 import { faPerson } from '@fortawesome/free-solid-svg-icons/faPerson';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from './hooks/redux';
 import { searchApi } from './store/reducers/searchApi';
+import { postProduits } from './store/reducers/produits';
+import { listDecourse } from './store/reducers/listdecourse';
 
 export default function Home() {
   const dispatch = useAppDispatch()
+  const [produitId, setproduitId] = useState<string | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [stateInput, setStateInput] = useState('');
+  const [link, setLink] = useState("");
   const data = useAppSelector((state) => state.searchApi.dataApi);
+  const login = useAppSelector((state) => state.login);
+  const listDecourseAPi = useAppSelector((state) => state.listDecourse.credentials);
+
 
   useEffect(() => {
     if (stateInput) {
       dispatch(searchApi({ stateInput }));
     }
+    dispatch(listDecourse());
+
   }, [stateInput, dispatch]);
 
-  // console.log("data ------>l.19 homePage", data);
-  // console.log("homePage data.generic_name ------>l.19 ", data.generic_name);
+
+
 
 
   async function handleChangeInput(event: ChangeEvent<HTMLInputElement>): Promise<void> {
@@ -30,10 +39,40 @@ export default function Home() {
     setShowDropdown(true);
     await dispatch(searchApi({ stateInput: inputValue }))
   }
-  const handleSelectItem = (productName: string) => {
-    setStateInput(productName); // Met à jour l'input avec la sélection
-    setShowDropdown(false); // Masque la liste déroulante après la sélection
+
+  const handleSelectItem = (product: any) => {
+    setStateInput(product.product_name); // Met à jour l'input avec le nom du produit sélectionné
+    setproduitId(product._id || product.code || product.id); // Stocke l'ID ou le code-barres du produit
+    setShowDropdown(false); // Masquer la liste déroulante après la sélection
+
+
   };
+
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    await dispatch(searchApi({ stateInput }))
+    // Trouver le produit exact basé sur l'ID ou le code-barres
+    const selectedProduct = data.find((product) => {
+      return product._id === produitId || product.code === produitId;
+    });
+
+
+    if (selectedProduct) {
+      console.log("Produit trouvé :", selectedProduct);
+      // Ajouter le produit dans la base de données ici
+      await dispatch(postProduits({
+        userId: 1, // must l'utilisateur est authentifié 
+        produitId,
+      }))
+
+    } else {
+      console.log("Aucun produit trouvé pour :", stateInput);
+    }
+
+  };
+
+
   return (
     <div className={styles.homePage}>
       {/* Header avec retour en arrière */}
@@ -45,43 +84,35 @@ export default function Home() {
       <section className={styles.shoppingList}>
         <h1 className={styles.title}>Liste de courses</h1>
 
-        <div className={styles.itemCard}>
-          <div className={styles.itemDetails}>
-            <img src="/images/baguette.png" alt="Baguette" className={styles.itemImage} />
-            {/* <Image src="/profile-pic.png" alt="Profile" width={40} height={40} className={styles.profileImage} /> */}
-            <div>
-              <h2>Baguette</h2>
-              <p>$2.2/pcs</p>
-            </div>
-          </div>
-          <button className={styles.addButton}>+</button>
-        </div>
 
-        <div className={styles.itemCard}>
-          <div className={styles.itemDetails}>
-            <img src="/images/mango.png" alt="Mango" className={styles.itemImage} />
-            <div>
-              <h2>Mango</h2>
-              <p>$1.8/kg</p>
+        {
+          listDecourseAPi.produits?.map((list, index) =>
+
+            <div key={index} className={styles.itemCard}>
+              <div className={styles.itemDetails}>
+                {/* <img src="/images/mango.png" alt="Mango" className={styles.itemImage} /> */}
+                <img src={list.image} alt={`image de ${list.nom} `} className={styles.itemImage} />
+
+                <div className={styles.itemNom}>
+                  <h2>{list.nom}</h2>
+                  {/* <p>$1.8/kg</p> */}
+                </div>
+              </div>
+              <button className={styles.addButton}>+</button>
             </div>
-          </div>
-          <button className={styles.addButton}>+</button>
-        </div>
+          )
+        }
+
       </section>
 
-      {/* Barre de recherche */}
-      {/* <section className={styles.searchSection}>
-        <input value={stateInput} onChange={handleChangeInput} type="text" className={styles.searchInput} placeholder="Search fresh groceries" />
-      </section> */}
-
       {/* Barre de recherche avec liste déroulante */}
-      <section className={styles.searchSection}>
+      <form onSubmit={handleFormSubmit} method="POST" action="submit" className={styles.searchSection}>
         <input
           value={stateInput}
           onChange={handleChangeInput}
           type="text"
           className="w-full p-2 border rounded-md bg-gray-800 text-white placeholder-gray-400"
-          placeholder="Search fresh groceries"
+          placeholder="Search product"
         />
         {showDropdown && data && data.length > 0 && (
           <ul className="absolute z-10 w-full bg-gray-800 border border-gray-700 rounded-md shadow-lg mt-1 text-white">
@@ -89,14 +120,21 @@ export default function Home() {
               <li
                 key={index}
                 className="cursor-pointer p-2 hover:bg-gray-600"
-                onClick={() => handleSelectItem(product.product_name || product.generic_name)}
+                onClick={() => handleSelectItem(product)}
               >
-                {product.product_name || product.generic_name}
+
+                {/* {product.product_name || product.generic_name} */}
+
+                <div>
+                  <strong>{product.product_name || product.generic_name}</strong>
+                  <span className="block text-xs text-gray-400">{product.brands}</span>
+                </div>
+
               </li>
             ))}
           </ul>
         )}
-      </section>
+      </form>
 
       {/* Section Récent */}
       <section className={styles.recentSection}>

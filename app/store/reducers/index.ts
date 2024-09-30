@@ -4,6 +4,7 @@ import userReducer from './user';
 import loginReducer from './login';
 import registerReducer from './register';
 import  searchApiReducer  from './searchApi';
+import  listDecourseReducer  from './listdecourse';
 
 const reducer = {
   lists: listsReducer,
@@ -11,7 +12,8 @@ const reducer = {
   produits: produitsReducer,
   login: loginReducer,
   register: registerReducer,
-  searchApi: searchApiReducer
+  searchApi: searchApiReducer,
+  listDecourse: listDecourseReducer
 };
 
 export default reducer;

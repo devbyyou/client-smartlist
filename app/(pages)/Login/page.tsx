@@ -35,7 +35,7 @@ export default function LoginPage() {
   // console.log('loginPage log de logged',logged)
   if (logged === true) {
     // alert('ok')
-    router.push("/")
+    // router.push("/")
   }
   return (
     <div className={styles.loginPage}>

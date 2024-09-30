@@ -4,7 +4,7 @@ import { axiosInstance } from '../../utils/axios';
 import { createAppAsyncThunk } from '@/app/utils/redux';
 
 interface SearchApiState {
-    dataApi: any
+    dataApi: any[]
     loading: any,
     error: any,
 };

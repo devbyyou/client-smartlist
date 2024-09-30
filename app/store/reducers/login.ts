@@ -5,13 +5,14 @@ import { LoginResponse } from '../../@types/user';
 // import { getUserDataFromLocalStorage } from '../../utils/user';
 
 interface LoginState {
-    logged: boolean;
+  logged: boolean;
   credentials: {
     email: string;
     password: string;
-    name:string
-
+    name: string
+    
   };
+  userId: number
   //   pseudo: string;
   //   token: { token:string };
   errorLogin: undefined | null | string;
@@ -20,7 +21,7 @@ interface LoginState {
 // const userData = getUserDataFromLocalStorage();
 
 export const initialState: LoginState = {
-    logged: false,
+  logged: false,
   //   pseudo: '',
   //   token: { token: '' },
   errorLogin: null,
@@ -29,9 +30,8 @@ export const initialState: LoginState = {
     email: '',
     password: '',
     name: '',
-
   },
-  //   ...userData,
+  userId: 0
 };
 
 export const login = createAppAsyncThunk(
@@ -48,7 +48,7 @@ export const login = createAppAsyncThunk(
         email,
         password,
       });
-     
+
 
       // localStorage.setItem('user', JSON.stringify(data));
 
@@ -76,19 +76,19 @@ const loginReducer = createReducer(initialState, (builder) => {
       state.logged = action.payload.logged;
       // state.pseudo = action.payload.pseudo;
       // state.token = action.payload.token;
-// console.log('action.payload.logged > ', action.payload.logged);
+      // console.log('action.payload.logged > ', action.payload.logged);
 
       state.credentials.email = '';
       state.credentials.password = '';
       // state.isLoading = false;
 
       state.errorLogin = action.payload.error;
-})
-  .addCase(login.rejected, (state, action) => {
-    state.errorLogin = action.error.message;
-    // console.log('login.rejected >',login.rejected);
+    })
+    .addCase(login.rejected, (state, action) => {
+      state.errorLogin = action.error.message;
+      // console.log('login.rejected >',login.rejected);
 
-    console.error(Error);
-  })
+      console.error(Error);
+    })
 });
 export default loginReducer;

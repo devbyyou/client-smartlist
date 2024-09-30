@@ -52,11 +52,22 @@
 .itemDetails {
   display: flex;
   align-items: center;
+  width: 100%;
+
 }
 
 .itemImage {
-  width: 50px;
-  margin-right: 10px;
+  width: 130px;
+  /* margin-right: 10px; */
+  object-fit: cover;
+  border-radius: 38px;
+  height: 111px;
+}
+.itemNom {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
 }
 
 .addButton {
