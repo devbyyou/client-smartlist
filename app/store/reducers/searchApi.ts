@@ -29,12 +29,10 @@ export const searchApi = createAppAsyncThunk(
             // const {
             //     dataApi,
             // } = state.searchApi;
-            // console.log('stateInput --------->', stateInput);
             const response = await axiosInstance.get(`search?search_terms=${stateInput}&json=true`
                 // ,
                 // { dataApi }
             );
-            // console.log('response ------->', response.data);
             // localStorage.setItem('user', JSON.stringify(data));
             return response.data;
             // as LoginResponse
@@ -53,7 +51,6 @@ const searchApiReducer = createReducer(initialState, (builder) => {
         .addCase(searchApi.fulfilled, (state, action) => {
             // state.loading = false;
             state.dataApi = action.payload;
-            console.log("searchApiReducer action.payload  -------->l48  ", action.payload);
         })
         .addCase(searchApi.rejected, (state) => {
             // state.loading = false;

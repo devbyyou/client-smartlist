@@ -1,14 +1,16 @@
 export interface LoginResponse {
-  logged: boolean
-  pseudo: string
-  token:Token
+  access_token: string;
+  logged: boolean;
+  error?: string | null;
 }
 
-export interface Token {
-//   user: User
-//   joueur: Joueur
-  token: string
-}
+
+// export interface Token {
+// //   user: User
+// //   joueur: Joueur
+
+//   token: string
+// }
 // export interface User {
 //   id: number
 //   nom: string

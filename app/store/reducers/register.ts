@@ -87,7 +87,6 @@ const registerReducer = createReducer(initialState, (builder) => {
         .addCase(register.rejected, (state, action) => {
             state.errorLogin = action.error.message;
             // state.errorLogin = action.error.message;
-            // console.log('register.rejected >',register.rejected);
             console.error(Error);
         })
 });

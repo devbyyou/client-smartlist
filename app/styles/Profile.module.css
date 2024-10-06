@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,700;1,700&display=swap');
+
+.profileContainer {
+  /* font-family:  var(--title-font-family), Arial; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #111; /* Fond sombre */
+    color: #616161;
+    height: 100vh;
+    padding: 20px;
+  }
+  
+  .profileHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .backButton {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+  }
+  
+  .iconContainer {
+    font-size: 24px;
+    color: #fff;
+  }
+  
+  .profileInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .profileImage {
+    border-radius: 50%;
+    border: 3px solid orange;
+  }
+  
+  .profileName {
+    margin-top: 10px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  .profileEmail {
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .profileActions {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 30px;
+  }
+  
+  .actionButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100px;
+  }
+  
+  .icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+    /* color: red; */
+  }
+  
+  .profileOptions {
+    margin-top: 30px;
+    width: 100%;
+  }
+  
+  .option {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+  }
+  
+  .option p {
+    margin-left: 10px;
+    font-size: 16px;
+  }
+  
+  .option .icon {
+    font-size: 20px;
+  }
+  
+  .optionLogout:hover{
+    /* font-size: 20px; */
+    background-color: rgb(236, 83, 74);
+    cursor: pointer;
+    color: #ffffff;
+  }

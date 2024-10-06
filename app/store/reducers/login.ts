@@ -2,7 +2,7 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 import { createAppAsyncThunk } from '../../utils/redux';
 import { axiosInstance } from '../../utils/axios';
 import { LoginResponse } from '../../@types/user';
-// import { getUserDataFromLocalStorage } from '../../utils/user';
+import { getUserDataFromLocalStorage, setUserDataToLocalStorage } from '../../utils/user';
 
 interface LoginState {
   logged: boolean;
@@ -10,15 +10,14 @@ interface LoginState {
     email: string;
     password: string;
     name: string
-    
   };
   userId: number
   //   pseudo: string;
   //   token: { token:string };
-  errorLogin: undefined | null | string;
+  errorLogin: null | string;
   //   isLoading: boolean;
 }
-// const userData = getUserDataFromLocalStorage();
+const userData = getUserDataFromLocalStorage();
 
 export const initialState: LoginState = {
   logged: false,
@@ -31,7 +30,9 @@ export const initialState: LoginState = {
     password: '',
     name: '',
   },
-  userId: 0
+  userId: 0,
+  ...userData,
+
 };
 
 export const login = createAppAsyncThunk(
@@ -43,17 +44,16 @@ export const login = createAppAsyncThunk(
       const {
         email, password,
       } = state.login.credentials;
-      // console.log('test');
       const response = await axiosInstance.post('auth/login', {
         email,
         password,
       });
 
+      setUserDataToLocalStorage(response.data); // Stocke les données après login
 
-      // localStorage.setItem('user', JSON.stringify(data));
+      // localStorage.setItem('user', JSON.stringify(response.data));
 
-      return response.data;
-      // as LoginResponse
+      return response.data as LoginResponse;
     } catch (error) {
       console.log('error catch', error);
 
@@ -73,20 +73,22 @@ const loginReducer = createReducer(initialState, (builder) => {
       state.credentials[field] = value;
     })
     .addCase(login.fulfilled, (state, action) => {
-      state.logged = action.payload.logged;
+      if (action.payload) {
+        // state.errorLogin = action.payload;
+        state.logged = action.payload.logged;
+      }
       // state.pseudo = action.payload.pseudo;
       // state.token = action.payload.token;
-      // console.log('action.payload.logged > ', action.payload.logged);
 
       state.credentials.email = '';
       state.credentials.password = '';
       // state.isLoading = false;
 
-      state.errorLogin = action.payload.error;
+
+
     })
     .addCase(login.rejected, (state, action) => {
-      state.errorLogin = action.error.message;
-      // console.log('login.rejected >',login.rejected);
+      // state.errorLogin = action.error.message;
 
       console.error(Error);
     })

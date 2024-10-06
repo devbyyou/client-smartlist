@@ -10,7 +10,6 @@ import { changeCredentialsField, login } from "@/app/store/reducers/login";
 
 
 export default function LoginPage() {
-  // const router = useRouter();
   const router = useRouter();
   const email = useAppSelector((state) => state.login.credentials.email);
   const password = useAppSelector((state) => state.login.credentials.password);
@@ -29,13 +28,10 @@ export default function LoginPage() {
   async function handlerSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     await dispatch(login());
-    // console.log('logged',logged);
-    
   }
-  // console.log('loginPage log de logged',logged)
   if (logged === true) {
     // alert('ok')
-    // router.push("/")
+    router.push("/")
   }
   return (
     <div className={styles.loginPage}>
@@ -89,10 +85,10 @@ export default function LoginPage() {
             <a href="#" className={styles.forgotPassword}>Forgot password?</a>
           </div>
           {/* Message d'erreur avec Tailwind */}
-      
 
-            {/* Afficher un message d'erreur si nécessaire */}
-            {errorLogin && <p className="text-red-500 text-sm mt-2">{errorLogin}</p>}
+
+          {/* Afficher un message d'erreur si nécessaire */}
+          {errorLogin && <p className="text-red-500 text-sm mt-2">{errorLogin}</p>}
 
           <button type="submit" className={styles.signInButton}>Sign In</button>
           <div className={styles.orSeparator}>or with</div>

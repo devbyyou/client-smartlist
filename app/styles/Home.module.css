@@ -1,18 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,700;1,700&display=swap');
+
 .homePage {
   /* background-color: #000; */
   color: #fff;
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  position: relative;
 }
-.homePage {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: space-between;
-    position: relative;
-  }
+
 
 .header {
   padding: 20px;
@@ -47,6 +49,7 @@
   align-items: center;
   padding: 15px;
   margin-bottom: 15px;
+  border: 1px solid #78c258  ;
 }
 
 .itemDetails {
@@ -68,6 +71,8 @@
  justify-content: center;
  align-items: center;
  width: 100%;
+ margin-left: 10px;
+color: #78c258;
 }
 
 .addButton {
@@ -107,13 +112,50 @@
   width: 50px;
   height: 50px;
   border-radius: 10px;
-  margin-right: 10px;
+  /* margin-right: 10px; */
+}
+.recentItems  {
+  display: grid;
+  gap: 12px;
+ grid-template-columns: repeat(auto-fit, minmax(100px, 15fr));
+ place-items: center;
+}
+.recentItem  {
+  display: flex;
+  background: #394139ad;
+  width: 91px;
+  height: 80px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  border: 1px solid #5851516b;
+  
+}
+
+.categoriesItem{
+ 
+  display: grid;
+     gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 15fr));
+   
+    place-items: center;
+  
+}
+.categories{
+  display: flex;
+  background: #70a070;
+  width: 91px;
+  height: 80px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
 }
 
 .suggestions button {
-  background-color: #333;
-  color: #fff;
-  border: none;
+  /* background-color: 1px solid #333; */
+
+  color: #4B4B4B;
+  border: 1px solid #333;
   border-radius: 20px;
   padding: 10px 20px;
   margin: 5px;
@@ -167,4 +209,19 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
+  }
+  .searchSection input {
+    /* --tw-bg-opacity: 1; */
+    background-color: #0a100e;
+    border: none;
+    border-radius: 0.5rem;
+
+}
+  .searchSection input::placeholder {
+    color: #4B4B4B;
+    opacity: 1; 
+  }
+
+  .categoriesSection button {
+    color: #4B4B4B;
   }
