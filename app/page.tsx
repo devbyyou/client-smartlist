@@ -1,62 +1,54 @@
 "use client";
-import  debounce  from 'lodash.debounce';
+import debounce from 'lodash.debounce';
 import styles from './styles/Home.module.css';
 import imgRandom from './public/4129571.png'
+import imgScroll from './public/9584634.png'
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faA, faHome, faPersonFalling, faQrcode, faShop } from '@fortawesome/free-solid-svg-icons';
 import { faPerson, } from '@fortawesome/free-solid-svg-icons/faPerson';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 
-import React, { ChangeEvent, FormEvent, MouseEvent, MouseEventHandler, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEvent, FormEvent, MouseEvent, MouseEventHandler, useEffect, useMemo, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from './hooks/redux';
-import { searchApi } from './store/reducers/searchApi';
-import { getProduits, postProduits } from './store/reducers/produits';
+import { searchApi, searchByCategories } from './store/reducers/searchApi';
+import { getProduits, postProduits, toggleCardClick } from './store/reducers/produits';
 import { listDecourse, removeListDeCourse } from './store/reducers/listdecourse';
 import { decodeToken, getUserDataFromLocalStorage } from './utils/user';
 import { useRouter } from "next/navigation";
 import { getCategorie } from './store/reducers/categorie';
 import { getuser } from './store/reducers/user';
+import Products from './(pages)/smartli/page';
+import Loader from './components/Loader';
+import cn from 'classnames';
 
 export default function Home() {
   const dispatch = useAppDispatch()
   const [produitId, setproduitId] = useState<string | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showcatList, setShowcatList] = useState(false);
   const [stateCategorie, setCategorie] = useState<boolean>(false);
   const [stateInput, setStateInput] = useState('');
-  const [user, setUser] = useState<any>(null); // État pour stocker les données utilisateur
+  const [imageCat, setImageCat] = useState('');
+  const [user, setUser] = useState<any>(null);
+  const [clickedIndex, setClickedIndex] = useState<any>();
+  const [productName, setProductName] = useState<{
+    image: string,
+    nom: string
+  }>({
+    image: '',
+    nom: ''
+  });
   const data = useAppSelector((state) => state.searchApi.dataApi);
+  const dataApiByCat = useAppSelector((state) => state.searchApi.dataApiByCat);
+  const clickedCards = useAppSelector((state) => state.produits.clickedCards);
+  const loading = useAppSelector((state) => state.searchApi.loading);
   const login = useAppSelector((state) => state.login);
   const listDecourseAPi = useAppSelector((state) => state.listDecourse.credentials);
-  // const produits = useAppSelector((state) => state.produits.credentials.produits);
+  const produits = useAppSelector((state) => state.produits.credentials.produits);
   const categorie = useAppSelector((state) => state.categorie.categorie);
   const listesCourses = useAppSelector((state) => state.user.credentials.listesCourses);
   const router = useRouter();
-
-  // useEffect(() => {
-  //   const userData = getUserDataFromLocalStorage();
-  //   if (userData && userData.access_token) {
-  //     const decoded = decodeToken(userData.access_token);// Décode le token pour récupérer les infos utilisateur
-  //     setUser(decoded); // Stocker les informations de l'utilisateur dans l'état
-  //     dispatch(listDecourse());
-  //     dispatch(getProduits());
-  //     dispatch(getCategorie());
-  //     dispatch(getuser());
-  //   } else {
-  //     // Si aucun token n'est trouvé, redirige vers la page de login
-  //     router.push('/login');
-  //   }
-  // }, [dispatch, router]);
-
-  // useEffect(() => {
-  //   if (stateInput) {
-  //     dispatch(searchApi({ stateInput }));
-  //   }
-  // }, [stateInput, dispatch]);
-
-
-
-
 
 
   // Débounce la recherche pour éviter trop de requêtes
@@ -68,8 +60,6 @@ export default function Home() {
     [dispatch]
   );
 
-
-
   useEffect(() => {
     // Récupération des données utilisateur et initialisation
     const userData = getUserDataFromLocalStorage();
@@ -80,6 +70,7 @@ export default function Home() {
       dispatch(getProduits());
       dispatch(getCategorie());
       dispatch(getuser());
+
     } else {
       router.push('/login');
     }
@@ -95,46 +86,35 @@ export default function Home() {
     };
   }, [dispatch, router, stateInput, debouncedSearch]);
 
-
-
-
-
-
-
   const listesCourseSlice = listesCourses.flatMap(list => list.produits.map(produits => {
     return produits
   }))
   const categorieSlice = categorie.slice(0, 5)
   const produitSlice = listesCourseSlice.slice(0, 5)
-  // Si l'utilisateur n'est pas encore chargé, affiche un message de chargement
   if (!user) {
     return <p>Chargement...</p>;
   }
-  // Gérer la recherche de produits
   async function handleChangeInput(event: ChangeEvent<HTMLInputElement>): Promise<void> {
     const inputValue = event.target.value;
     setStateInput(inputValue);
     setShowDropdown(true);
-    // await dispatch(searchApi({ stateInput: inputValue }))
   }
 
   const handleSelectItem = (product: any) => {
-    setStateInput(product.product_name); // Met à jour l'input avec le nom du produit sélectionné
-    setproduitId(product._id || product.code || product.id); // Stocke l'ID ou le code-barres du produit
-    setShowDropdown(false); // Masquer la liste déroulante après la sélection
+    setStateInput(product.product_name); 
+    setproduitId(product._id || product.code || product.id); 
+    setShowDropdown(false); 
   };
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Trouver le produit exact basé sur l'ID ou le code-barres
     const selectedProduct = data.find((product) => {
       return product._id === produitId || product.code === produitId;
     });
     if (selectedProduct) {
       console.log("Produit trouvé :", selectedProduct);
-      // Ajouter le produit dans la base de données ici
       await dispatch(postProduits({
-        userId: user.sub, // must l'utilisateur est authentifié 
+        userId: user.sub, 
         produitId,
       }))
       await dispatch(listDecourse());
@@ -154,12 +134,47 @@ export default function Home() {
 
   }
 
-
   const handleClickedSeeAll = (event: MouseEvent<HTMLButtonElement>) => {
-    // event.preventDefault()
+
     setCategorie(!stateCategorie)
+  }
+
+
+
+  const handleShowProductCat = async (produit: { image: string; nom: string; id: string; }, index: any): Promise<MouseEventHandler<HTMLDivElement> | any> => {
+    setProductName(produit)
+    setClickedIndex(index)
+    await dispatch(searchByCategories({
+      categoryId: parseInt(produit.id, 10)
+    }));
+    setImageCat(produit.image);
+    setShowcatList(true)
+  }
+
+
+
+  const handleItemCategorie = async (product: { product_name: string; image_url: string; _id: string; }, index: number) => {
+
+    dispatch(toggleCardClick(product._id));
+
+    const produitId = product._id
+    const selectedProduct = dataApiByCat.find((product) => {
+      return product._id === produitId;
+    });
+    if (selectedProduct) {
+      console.log("Produit trouvé :", selectedProduct);
+      await dispatch(postProduits({
+        userId: user.sub,
+        produitId,
+      }))
+      await dispatch(listDecourse());
+    } else {
+      console.log("Aucun produit trouvé pour :", stateInput);
+    }
 
   }
+
+
 
 
   return (
@@ -218,51 +233,107 @@ export default function Home() {
           </ul>
         )}
       </form>
-      {/* Section Récent */}
-      <section className={styles.recentSection}>
-        <h2>Récent </h2>
-        <div className={styles.recentItems}>
-          {produitSlice?.map((produit, index) => (
-            < div key={index} className={styles.recentItem} >
-              <img src={produit.image} alt={`Image de ${produit.nom} `} />
+
+
+      <main className={styles.mainHome}>
+        {/* Section Récent */}
+        <section className={styles.recentSection}>
+          <h2>Récent </h2>
+          <div className={styles.recentItems}>
+            {produitSlice?.map((produit, index) => (
+              < div key={index} className={styles.recentItem} >
+                <img src={produit.image} alt={`Image de ${produit.nom} `} />
+              </div>
+            ))}
+          </div>
+        </section >
+        {/* Section Suggestions */}
+        < section className={styles.suggestionsSection} >
+          <h2>Suggestions</h2>
+          <div className={styles.suggestions}>
+            {produitSlice?.map((produit, index) => (
+              <button key={index} >{produit.nom}</button>
+            ))}
+          </div>
+        </section >
+
+        {/* Section Catégories */}
+        < section className={styles.categoriesSection} >
+          <h2>Categories
+            <button onClick={handleClickedSeeAll} >{`${stateCategorie ? "Réduire" : "See All"}`}</button>
+          </h2>
+          <div className={styles.categoriesItemBox}>
+            <div className={styles.categoriesItem}>
+              {
+                stateCategorie ?
+                  categorie?.map((produit: { image: string; nom: any; id: string; }, index: React.Key | null | undefined) => (
+
+                    <div onClick={() => handleShowProductCat(produit, index)} key={index} className={cn(styles.categories, {
+                      [styles.isClickedCardCat]: clickedIndex === index,
+                    })}>
+                      <img src={produit.image ? produit.image : imgRandom.src} alt={`Image de ${produit.nom}`} />
+                    </div>
+
+                  )) :
+                  categorieSlice?.map((produit, index) => (
+                    <div onClick={() => handleShowProductCat(produit, index)} key={index} className={cn(styles.categories, {
+                      [styles.isClickedCardCat]: clickedIndex === index,
+                    })}>
+                      <img src={produit.image ? produit.image : imgRandom.src} alt={`Image de ${produit.nom}`} />
+                    </div>
+                  ))
+              }
+
+
             </div>
-          ))}
-        </div>
-      </section >
-      {/* Section Suggestions */}
-      < section className={styles.suggestionsSection} >
-        <h2>Suggestions</h2>
-        <div className={styles.suggestions}>
-          {produitSlice?.map((produit, index) => (
-            <button key={index} >{produit.nom}</button>
-          ))}
-        </div>
-      </section >
-
-      {/* Section Catégories */}
-      < section className={styles.categoriesSection} >
-        <h2>Categories
-          <button onClick={handleClickedSeeAll} >{`${stateCategorie ? "Réduire" : "See All"}`}</button>
-        </h2>
-        <div className={styles.categoriesItem}>
-          {
-            stateCategorie ?
-              categorie?.map((produit: { image: string | undefined; nom: any; }, index: React.Key | null | undefined) => (
-                <div key={index} className={styles.categories}>
-                  <img src={produit.image ? produit.image : imgRandom.src} alt={`Image de ${produit.nom}`} />
+          </div>
+        </section >
+        {/* Section CARD Catégories */}
+        {loading ? (
+          <Loader />
+        ) : showcatList && (
+          <div className={styles.container}>
+            <div className={styles.itemTitleCategorie}>
+              <div className={styles.itemLeftIcon}>
+                {/* <FontAwesomeIcon icon={faArrowLeft} /> */}
+                <div className={`${styles.categories} ${styles.categoriesClicked}`}>
+                  <img src={!imageCat ? imgRandom.src : imageCat} alt={`Image de `} />
                 </div>
-              )) :
-              categorieSlice?.map((produit, index) => (
-                <div key={index} className={styles.categories}>
-                  <img src={produit.image} alt={`Image de ${produit.nom}`} />
-                </div>
-              ))
-          }
-
-
-        </div>
-      </section >
-
+                <h2 className={styles.titleCategorie}>{productName.nom}</h2>
+              </div>
+              <div className={styles.itemTitleRightIcon}>
+                <Image width={30} height={10} src={imgScroll} alt={`Image de`} />
+              </div>
+            </div>
+            {/* Div List Item Catégories */}
+            <div className={styles.productList}>
+              {
+                Array.isArray(dataApiByCat) ? (
+                  dataApiByCat?.map((product, index) => (
+                    <div onClick={() => handleItemCategorie(product, index)} key={index} className={cn(styles.productCard, {
+                      [styles.isClicked]: clickedCards[product._id],
+                    })}>
+                      <div className={styles.imageContainer}>
+                        <img
+                          src={product.image_url ? product.image_url : imgRandom.src}
+                          alt={`Image de ${product.product_name}`}
+                          width={60}
+                          height={60}
+                          className={styles.productImage}
+                        />
+                      </div>
+                      <div className={styles.productInfo}>
+                        <h3 className={styles.productName}>{product.product_name}</h3>
+                      </div>
+                    </div>
+                  ))
+                ) :
+                  <Loader />
+              }
+            </div>
+          </div>
+        )}
+      </main>
     </div >
   );
 }

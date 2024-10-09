@@ -30,7 +30,6 @@ export default function LoginPage() {
     await dispatch(login());
   }
   if (logged === true) {
-    // alert('ok')
     router.push("/")
   }
   return (

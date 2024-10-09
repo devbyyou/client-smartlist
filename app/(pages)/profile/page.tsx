@@ -32,14 +32,12 @@ export default function Profile() {
   useEffect(() => {
     const userData = getUserDataFromLocalStorage();
     if (userData && userData.access_token) {
-      const decoded = decodeToken(userData.access_token);// Décode le token pour récupérer les infos utilisateur
-      setUser(decoded); // Stocker les informations de l'utilisateur dans l'état
-      // dispatch(listDecourse());
-      // dispatch(getProduits());
+      const decoded = decodeToken(userData.access_token);
+      setUser(decoded); 
+
       dispatch(getuser());
 
     } else {
-      // Si aucun token n'est trouvé, redirige vers la page de login
       router.push('/login');
     }
   }, [dispatch, router]);

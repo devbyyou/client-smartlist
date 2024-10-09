@@ -51,6 +51,9 @@
   margin-bottom: 15px;
   border: 1px solid #78c258  ;
 }
+.itemCard :hover {
+cursor: pointer;
+}
 
 .itemDetails {
   display: flex;
@@ -150,6 +153,9 @@ color: #78c258;
   justify-content: center;
   border-radius: 1rem;
 }
+.categories :hover{
+ cursor: pointer;
+}
 
 .suggestions button {
   /* background-color: 1px solid #333; */
@@ -225,3 +231,149 @@ color: #78c258;
   .categoriesSection button {
     color: #4B4B4B;
   }
+
+  
+
+
+
+
+
+
+  .container {
+    /* background-color: #000; */
+    /* color: #fff; */
+    padding: 20px;
+    /* min-height: 100vh; */
+  }
+  
+  .titleCategorie {
+    font-size: 24px;
+    color: #a3ffac; /* Couleur verte pour le titre */
+    /* margin-bottom: 20px; */
+    /* display: flex; */
+    /* align-items: center; */
+  }
+  
+  .productList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .productCard {
+    display: flex;
+    align-items: center;
+    background-color: #1c1c1e; /* Fond sombre des cartes */
+    border-radius: 15px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  .productCard :hover {
+    cursor: pointer;
+  }
+  
+  .imageContainer {
+    flex-shrink: 0;
+  }
+  
+  .productImage {
+    border-radius: 15px;
+  }
+  
+  .productInfo {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .productName {
+    font-size: 18px;
+    color: #a3ffac; /* Vert clair pour le nom du produit */
+    margin-bottom: 5px;
+  }
+  
+  .productPrice {
+    font-size: 20px;
+    color: #a3ffac;
+  }
+  
+  .unit {
+    font-size: 14px;
+    color: #a3ffac;
+  }
+  
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .favoriteButton {
+    background: none;
+    border: none;
+    color: #ff4d4f; /* Rouge pour le bouton cœur */
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .addButton {
+    background-color: #34c759; /* Vert pour le bouton d'ajout */
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .itemTitleCategorie{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 6px 0px 6px;
+    margin-bottom: 2rem;
+  }
+
+  .itemLeftIcon{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  .itemTitleRightIcon img{
+    opacity: 0.1;
+  }
+  .categoriesClicked{
+    width: 72px;
+    height: 62px;
+    border: 5px solid #b4b6ec;
+    }
+    .isClicked{
+         background-color: #426f3e;
+    }
+    .isClickedCardCat{
+      border: 5px solid #b4b6ec;
+    }
+
+    .mainHome{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .mainHome h2{
+      margin-bottom: 1rem;
+    }
+    .categoriesItemBox{
+      /* background: red; */
+      height: 27vh;
+
+    }

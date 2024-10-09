@@ -16,29 +16,6 @@ export const axiosInstance = axios.create({
 
 
 
-// Intercepteur pour gérer les erreurs
-// axiosInstance.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     const { status } = error.response;
-//     // Si la réponse a un statut 440, le token est probablement expiré
-//     if (status === 440) {
-//       // removeUserDataFromLocalStorage();
-//       // eslint-disable-next-line no-alert
-//       setTimeout(() => {
-//         alert('Token expiré. Déconnexion de l\'utilisateur.');
-//         // document.location.href = 'http://localhost:5173';
-//         // window.location.href = 'http://localhost:5173';
-//         // window.location.replace = 'http://localhost:5173';
-//         window.location.reload();
-//       }, 0);
-//     }
-
-//     // Propagez l'erreur pour que le code appelant puisse également la gérer
-//     return Promise.reject(error);
-//   },
-// );
-// Je peu agir avant qu'une requête soit envoyé
 axiosInstance.interceptors.request.use((config) => {
   // Je récupère les données utilisateur
   const userData = getUserDataFromLocalStorage();

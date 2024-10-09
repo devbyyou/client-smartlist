@@ -9,13 +9,15 @@ interface categorieState {
   categorie: [{
     image: string
     nom: string
+    id: string;
   }]
 }
 
 export const initialState: categorieState = {
   categorie: [{
     image: '',
-    nom: ''
+    nom: '',
+    id: ''
   }]
 };
 
