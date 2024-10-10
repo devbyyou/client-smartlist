@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../utils/axios';
-import { createAppAsyncThunk } from '@/app/utils/redux';
+import { createAppAsyncThunk } from '../..//utils/redux';
 
 interface SearchApiState {
     dataApi: any[]

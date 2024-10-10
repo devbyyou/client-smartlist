@@ -1,7 +1,7 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
 import { createAppAsyncThunk } from '../../utils/redux';
 import { axiosInstance } from '../../utils/axios';
-import { decodeToken, getUserDataFromLocalStorage } from '@/app/utils/user';
+import { decodeToken, getUserDataFromLocalStorage } from '../..//utils/user';
 // import {
 // Equipe, Joueur, 
 //   LoginResponse,

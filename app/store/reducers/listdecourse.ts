@@ -2,7 +2,7 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 import { createAppAsyncThunk } from '../../utils/redux';
 import { axiosInstance } from '../../utils/axios';
 import { LoginResponse } from '../../@types/user';
-import { decodeToken, getUserDataFromLocalStorage } from '@/app/utils/user';
+import { decodeToken, getUserDataFromLocalStorage } from '../..//utils/user';
 // import { getUserDataFromLocalStorage } from '../../utils/user';
 
 interface ListDeCourseState {

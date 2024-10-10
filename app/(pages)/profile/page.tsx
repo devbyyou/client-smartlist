@@ -6,7 +6,8 @@ import styles from '../../styles/Profile.module.css';
 import { decodeToken, getUserDataFromLocalStorage, removeUserDataFromLocalStorage } from '../../utils/user';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useRouter } from 'next/navigation';
-import { getuser } from '@/app/store/reducers/user';
+import { getuser } from '../..//store/reducers/user';
+
 import link from '../../public/undraw_profile.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShop } from '@fortawesome/free-solid-svg-icons/faShop';
@@ -33,7 +34,7 @@ export default function Profile() {
     const userData = getUserDataFromLocalStorage();
     if (userData && userData.access_token) {
       const decoded = decodeToken(userData.access_token);
-      setUser(decoded); 
+      setUser(decoded);
 
       dispatch(getuser());
 

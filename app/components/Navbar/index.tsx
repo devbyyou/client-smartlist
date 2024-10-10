@@ -12,8 +12,8 @@ import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from '@/app/hooks/redux';
-import { decodeToken, getUserDataFromLocalStorage } from '@/app/utils/user';
+import { useAppDispatch } from '../..//hooks/redux';
+import { decodeToken, getUserDataFromLocalStorage } from '../..//utils/user';
 
 
 
