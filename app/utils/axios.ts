@@ -8,7 +8,7 @@ import { getUserDataFromLocalStorage, removeUserDataFromLocalStorage } from './u
 // Je créer une instance d'axios me permettant d'enregistrer
 // une configuration de base
 // const baseURL = 'http://localhost:3002/';
-const baseURL = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3002/';
+const baseURL = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3002/api/';
 // eslint-disable-next-line import/prefer-default-export
 export const axiosInstance = axios.create({
   baseURL,
