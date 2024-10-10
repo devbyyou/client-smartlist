@@ -3,9 +3,9 @@ import { useRouter } from "next/navigation";
 import styles from '../../styles/Login.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faArrowLeft, faEnvelope, faEyeSlash, faAppleAlt, faGamepad, faG, faF, faDove, faPerson } from '@fortawesome/free-solid-svg-icons';
-import { useAppDispatch, useAppSelector } from "@/app/hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { ChangeEvent, FormEvent } from "react";
-import { changeCredentialsField, register } from "@/app/store/reducers/register";
+import { changeCredentialsField, register } from "../../store/reducers/register";
 
 
 

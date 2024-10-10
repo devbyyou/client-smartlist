@@ -1,4 +1,4 @@
-import Loader from "@/app/components/Loader";
+import Loader from "../../components/Loader";
 
 import styles from "../../styles/Smartli.module.css"
 
