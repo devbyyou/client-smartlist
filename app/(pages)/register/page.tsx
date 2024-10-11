@@ -124,7 +124,7 @@ export default function RegisterPage() {
 
                 <footer className={styles.footer}>
                     <span>Already have an account ?</span>
-                    <a href="/login" className={styles.signUpLink}>Sign In</a>
+                    <a onClick={() => router.push('/login')}className={styles.signUpLink}>Sign In</a>
                 </footer>
             </main>
         </div>

@@ -47,11 +47,11 @@ export default function Navbar() {
             {user && (
                 <nav className={styles.navbar}>
                     {navItems.map((item) => (
-                        <Link href={item.path} key={item.label} className={`${styles.navItem} 
+                        <div onClick={() => router.push(`${ item.path }`)} key={item.label} className={`${styles.navItem} 
                     ${pathname === item.path ? styles.active : ''}`}>
                             <FontAwesomeIcon icon={item.icon} />
                             <span>{item.label}</span>
-                        </Link>
+                        </div>
                     ))}
                 </nav>
             )}

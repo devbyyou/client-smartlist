@@ -32,7 +32,7 @@ export default function LoginPage() {
   if (logged === true) {
     setTimeout(() => {
       router.push("/home");
-    }, 100); 
+    }, 100);
   }
   return (
     <div className={styles.loginPage}>
@@ -103,7 +103,8 @@ export default function LoginPage() {
 
         <footer className={styles.footer}>
           <span>New User?</span>
-          <a href="/register" className={styles.signUpLink}>Sign Up</a>
+          <a onClick={() => router.push("/register")}
+            className={styles.signUpLink}>Sign Up</a>
         </footer>
       </main>
     </div>
