@@ -27,7 +27,7 @@ export default function Navbar() {
             const decoded = decodeToken(userData.access_token);
             setUser(decoded);
         } else {
-            // router.push('/login');
+            // router.push('/');
         }
 
 
@@ -36,7 +36,7 @@ export default function Navbar() {
 
     const pathname = usePathname(); // Utile pour savoir sur quelle page on est
     const navItems = [
-        { path: '/', label: 'Home', icon: faHome },
+        { path: '/home', label: 'Home', icon: faHome },
         { path: '/scanner', label: 'Scanner', icon: faQrcode },
         { path: '/smartli', label: 'Smartli', icon: faShop },
         { path: '/profile', label: 'Profile', icon: faUser }

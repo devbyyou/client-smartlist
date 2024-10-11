@@ -30,7 +30,9 @@ export default function LoginPage() {
     await dispatch(login());
   }
   if (logged === true) {
-    router.push("/")
+    setTimeout(() => {
+      router.push("/home");
+    }, 100); 
   }
   return (
     <div className={styles.loginPage}>

@@ -15,6 +15,7 @@ import { faBell, faHeart, faNoteSticky, faRightFromBracket, faUser, faVectorSqua
 import { faGift } from '@fortawesome/free-solid-svg-icons/faGift';
 import { faGear } from '@fortawesome/free-solid-svg-icons/faGear';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
+import AuthenticatedLayout from '../../components/Layout/AuthenticatedLayout';
 
 export default function Profile() {
   const dispatch = useAppDispatch()
@@ -39,7 +40,7 @@ export default function Profile() {
       dispatch(getuser());
 
     } else {
-      router.push('/login');
+      router.push('/');
     }
   }, [dispatch, router]);
 
@@ -49,81 +50,85 @@ export default function Profile() {
 
   function handleCLickedLogOut(): void {
     removeUserDataFromLocalStorage()
-    router.push('/login');
+    router.push('/');
   }
 
   return (
-    <div className={styles.profileContainer}>
-      <div className={styles.profileHeader}>
-        <button onClick={() => router.back()} className={styles.backButton}>
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </button>
-        <h2>Profile</h2>
-        <div className={styles.iconContainer}>
-          <span className={styles.iconBag}>
-            <FontAwesomeIcon color='#cca771' icon={faShop} />
-          </span>
+    <AuthenticatedLayout>
+
+      <div className={styles.profileContainer}>
+        <div className={styles.profileHeader}>
+          <button onClick={() => router.back()} className={styles.backButton}>
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+          <h2>Profile</h2>
+          <div className={styles.iconContainer}>
+            <span className={styles.iconBag}>
+              <FontAwesomeIcon color='#cca771' icon={faShop} />
+            </span>
+          </div>
+        </div>
+
+        <div className={styles.profileInfo}>
+          <Image
+            src={link}
+            alt="Profile Picture"
+            width={100}
+            height={100}
+            className={styles.profileImage}
+          />
+          <h3 className={styles.profileName}>{name}</h3>
+          <p className={styles.profileEmail}>{email}</p>
+        </div>
+
+        <div className={styles.profileActions}>
+          <button className={styles.actionButton}>
+            <span className={styles.icon}>
+              <FontAwesomeIcon color='#3DB1CB' icon={faBell} />
+            </span>
+            Notification
+          </button>
+          <button className={styles.actionButton}>
+            <span className={styles.icon}>
+              <FontAwesomeIcon color='#26AD71' icon={faGift} />
+            </span>
+            Voucher
+          </button>
+          <button className={styles.actionButton}>
+            <span className={styles.icon}>
+              <FontAwesomeIcon color='#EC534A' icon={faHeart} />
+
+            </span>
+            Wishlist
+          </button>
+        </div>
+
+        <div className={styles.profileOptions}>
+          <div className={styles.option}>
+            <span className={styles.icon}>
+              <FontAwesomeIcon color='#26AD71' icon={faUser} />
+            </span>
+            <p>My Profile</p>
+          </div>
+          <div className={styles.option}>
+            <span className={styles.icon}>
+              <FontAwesomeIcon color='#26AD71' icon={faGear} />
+            </span>
+            <p>Notification Setting</p>
+          </div>
+          <div
+            onClick={handleCLickedLogOut}
+            className={`${styles.option} ${styles.optionLogout}`}
+            onMouseEnter={() => setHidden(false)}
+            onMouseLeave={() => setHidden(true)}>
+            <span className={styles.icon}>
+              <FontAwesomeIcon color={hidden ? '#EC534A' : '#fff'} icon={faRightFromBracket} />
+            </span>
+            <p>Log Out</p>
+          </div>
         </div>
       </div>
+    </AuthenticatedLayout>
 
-      <div className={styles.profileInfo}>
-        <Image
-          src={link}
-          alt="Profile Picture"
-          width={100}
-          height={100}
-          className={styles.profileImage}
-        />
-        <h3 className={styles.profileName}>{name}</h3>
-        <p className={styles.profileEmail}>{email}</p>
-      </div>
-
-      <div className={styles.profileActions}>
-        <button className={styles.actionButton}>
-          <span className={styles.icon}>
-            <FontAwesomeIcon color='#3DB1CB' icon={faBell} />
-          </span>
-          Notification
-        </button>
-        <button className={styles.actionButton}>
-          <span className={styles.icon}>
-            <FontAwesomeIcon color='#26AD71' icon={faGift} />
-          </span>
-          Voucher
-        </button>
-        <button className={styles.actionButton}>
-          <span className={styles.icon}>
-            <FontAwesomeIcon color='#EC534A' icon={faHeart} />
-
-          </span>
-          Wishlist
-        </button>
-      </div>
-
-      <div className={styles.profileOptions}>
-        <div className={styles.option}>
-          <span className={styles.icon}>
-            <FontAwesomeIcon color='#26AD71' icon={faUser} />
-          </span>
-          <p>My Profile</p>
-        </div>
-        <div className={styles.option}>
-          <span className={styles.icon}>
-            <FontAwesomeIcon color='#26AD71' icon={faGear} />
-          </span>
-          <p>Notification Setting</p>
-        </div>
-        <div
-          onClick={handleCLickedLogOut}
-          className={`${styles.option} ${styles.optionLogout}`}
-          onMouseEnter={() => setHidden(false)}
-          onMouseLeave={() => setHidden(true)}>
-          <span className={styles.icon}>
-            <FontAwesomeIcon color={hidden ? '#EC534A' : '#fff'} icon={faRightFromBracket} />
-          </span>
-          <p>Log Out</p>
-        </div>
-      </div>
-    </div>
   );
 }
